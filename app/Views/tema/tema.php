@@ -14,6 +14,7 @@
     <!-- PLUGINS STYLES-->
     <!-- THEME STYLES-->
     <link href="<?= base_url('assets/admincast/dist/assets/css/main_.min.css'); ?>" rel="stylesheet" />
+    <link href="<?= base_url('assets/admincast/dist/assets/css/themes/orange.css'); ?>" rel="stylesheet" />
     <link href="<?=base_url('assets/admincast/dist/assets/vendors/sweetalert2/sweetalert2.min.css');?>" rel="stylesheet" type="text/css">
     <?= $this->renderSection('css'); ?>
     <!-- PAGE LEVEL STYLES-->

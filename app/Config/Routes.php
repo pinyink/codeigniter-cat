@@ -120,35 +120,13 @@ $routes->get('/menu_dua', 'Menu_dua::index', ['namespace' => 'App\Controllers'])
 $routes->get('/menu_dua_db', 'Menu_dua::createDb', ['namespace' => 'App\Controllers']);
 $routes->get('/menu_satu', 'Menu_satu::index', ['filter' => 'auth:N, 1, 1', 'namespace' => 'App\Controllers']);
 
-$routes->group('/siswa', ['namespace' => 'App\Controllers'], static function($routes) {
-    $routes->get('/', 'SiswaController::index', ['filter' => 'auth:Y,1,1']);
-    $routes->post('ajax_list', 'SiswaController::ajaxList', ['filter' => 'auth:N,1,1']);
-    $routes->post('save_data', 'SiswaController::saveData', ['filter' => 'auth:N,1,2']);
-    $routes->post('update_data', 'SiswaController::saveData', ['filter' => 'auth:N,1,3']);
-    $routes->get('(:num)/get_data', 'SiswaController::getData/$1', ['filter' => 'auth:N,1,1']);
-    $routes->delete('(:num)/delete_data', 'SiswaController::deleteData/$1', ['filter' => 'auth:N,1,4']);
-	$routes->post('siswa_nama_exist', 'SiswaController::siswanamaExist', ['filter' => 'auth:N,1,2']);
-});
-
-// test crid
-$routes->group('product', ['namespace' => 'App\Controllers'], static function($routes) {
-    $routes->get('index', 'ProductController::index', ['filter' => 'auth:Y,1,1']);
-    $routes->post('ajax_list', 'ProductController::ajaxList', ['filter' => 'auth:N,1,1']);
-    $routes->get('tambah', 'ProductController::tambahData', ['filter' => 'auth:N,1,2']);
-    $routes->post('save', 'ProductController::saveData', ['filter' => 'auth:N,1,2']);
-    $routes->get('(:num)/detail', 'ProductController::detailData/$1', ['filter' => 'auth:Y,1,1']);
-    $routes->get('(:num)/edit', 'ProductController::editData/$1', ['filter' => 'auth:N,1,3']);
-    $routes->post('update', 'ProductController::saveData', ['filter' => 'auth:N,1,3']);
-    $routes->delete('(:num)/delete', 'ProductController::deleteData/$1', ['filter' => 'auth:N,1,4']);
-});
-
-$routes->group('product_categories', ['namespace' => 'App\Controllers'], static function($routes) {
-    $routes->get('index', 'ProductCategoriesController::index', ['filter' => 'auth:Y,1,1']);
-    $routes->post('ajax_list', 'ProductCategoriesController::ajaxList', ['filter' => 'auth:N,1,1']);
-    $routes->get('tambah', 'ProductCategoriesController::tambahData', ['filter' => 'auth:N,1,2']);
-    $routes->post('save', 'ProductCategoriesController::saveData', ['filter' => 'auth:N,1,2']);
-    $routes->get('(:num)/detail', 'ProductCategoriesController::detailData/$1', ['filter' => 'auth:Y,1,1']);
-    $routes->get('(:num)/edit', 'ProductCategoriesController::editData/$1', ['filter' => 'auth:N,1,3']);
-    $routes->post('update', 'ProductCategoriesController::saveData', ['filter' => 'auth:N,1,3']);
-    $routes->delete('(:num)/delete', 'ProductCategoriesController::deleteData/$1', ['filter' => 'auth:N,1,4']);
+$routes->group('ref_jenis_soal', ['namespace' => 'App\Controllers'], static function($routes) {
+    $routes->get('index', 'RefJenisSoalController::index', ['filter' => 'auth:Y,1,1']);
+    $routes->post('ajax_list', 'RefJenisSoalController::ajaxList', ['filter' => 'auth:N,1,1']);
+    $routes->get('tambah', 'RefJenisSoalController::tambahData', ['filter' => 'auth:N,1,2']);
+    $routes->post('save', 'RefJenisSoalController::saveData', ['filter' => 'auth:N,1,2']);
+    $routes->get('(:num)/detail', 'RefJenisSoalController::detailData/$1', ['filter' => 'auth:Y,1,1']);
+    $routes->get('(:num)/edit', 'RefJenisSoalController::editData/$1', ['filter' => 'auth:N,1,3']);
+    $routes->post('update', 'RefJenisSoalController::saveData', ['filter' => 'auth:N,1,3']);
+    $routes->delete('(:num)/delete', 'RefJenisSoalController::deleteData/$1', ['filter' => 'auth:N,1,4']);
 });
