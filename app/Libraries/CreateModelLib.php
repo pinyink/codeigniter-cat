@@ -142,9 +142,9 @@ class ".$namaModel." extends Model
         $no = 1;
         foreach ($this->fields as $key => $value) {
             if ($no == 1) {
-                $allFields .= "a.".$value['name_field'];
+                $allFields .= $this->table['primary_key'].", a.".$value['name_field'];
             } else {
-                $allFields .= ", a.".$value['name_field'];
+                $allFields .= $this->table['primary_key'].", a.".$value['name_field'];
             }
             $no++;
         }

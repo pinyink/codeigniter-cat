@@ -247,8 +247,12 @@ $view = "
     public function tambahView($aksi)
     {
         $include = "@?= \$this->include('".$this->table['table']."/_form_".$this->table['table']."'); ?@";
+        $editbtn = "";
         if ($aksi == 'Detail') {
             $include = "@?= \$this->include('".$this->table['table']."/_detail'); ?@";
+            $editbtn = "@?php if(enforce(".$this->table['rbac'].", 3)): ?@
+                        <a href='@?=base_url('".$this->table['routename']."/'.\$".$this->table['table']."['id'].'/edit')?@' class='btn btn-primary btn-sm'><i class=\"fa fa-edit\"></i> Edit Data</a>
+                    @?php endif ?@";
         }
         $view = "
 @?= \$this->extend('tema/tema'); ?@ 
@@ -278,6 +282,7 @@ $view = "
             <div class=\"ibox\">
                 <div class=\"ibox-body\">
                     <a href='@?=base_url('".$this->table['routename']."/index')?@' class='btn btn-info btn-sm'><i class=\"fa fa-backward\"></i> Kembali</a>
+                    ".$editbtn."
                 </div>
             </div>
         </div>

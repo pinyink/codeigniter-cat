@@ -130,3 +130,25 @@ $routes->group('ref_jenis_soal', ['namespace' => 'App\Controllers'], static func
     $routes->post('update', 'RefJenisSoalController::saveData', ['filter' => 'auth:N,1,3']);
     $routes->delete('(:num)/delete', 'RefJenisSoalController::deleteData/$1', ['filter' => 'auth:N,1,4']);
 });
+
+$routes->group('ref_soal', ['namespace' => 'App\Controllers'], static function($routes) {
+    $routes->get('index', 'RefSoalController::index', ['filter' => 'auth:Y,2,1']);
+    $routes->post('ajax_list', 'RefSoalController::ajaxList', ['filter' => 'auth:N,2,1']);
+    $routes->get('tambah', 'RefSoalController::tambahData', ['filter' => 'auth:N,2,2']);
+    $routes->post('save', 'RefSoalController::saveData', ['filter' => 'auth:N,2,2']);
+    $routes->get('(:num)/detail', 'RefSoalController::detailData/$1', ['filter' => 'auth:Y,2,1']);
+    $routes->get('(:num)/edit', 'RefSoalController::editData/$1', ['filter' => 'auth:N,2,3']);
+    $routes->post('update', 'RefSoalController::saveData', ['filter' => 'auth:N,2,3']);
+    $routes->delete('(:num)/delete', 'RefSoalController::deleteData/$1', ['filter' => 'auth:N,2,4']);
+});
+
+$routes->group('images', ['namespace' => 'App\Controllers'], static function($routes) {
+    $routes->get('index', 'ImagesController::index', ['filter' => 'auth:Y,3,1']);
+    $routes->post('ajax_list', 'ImagesController::ajaxList', ['filter' => 'auth:N,3,1']);
+    $routes->get('tambah', 'ImagesController::tambahData', ['filter' => 'auth:N,3,2']);
+    $routes->post('save', 'ImagesController::saveData', ['filter' => 'auth:N,3,2']);
+    $routes->get('(:num)/detail', 'ImagesController::detailData/$1', ['filter' => 'auth:Y,3,1']);
+    $routes->get('(:num)/edit', 'ImagesController::editData/$1', ['filter' => 'auth:N,3,3']);
+    $routes->post('update', 'ImagesController::saveData', ['filter' => 'auth:N,3,3']);
+    $routes->delete('(:num)/delete', 'ImagesController::deleteData/$1', ['filter' => 'auth:N,3,4']);
+});
