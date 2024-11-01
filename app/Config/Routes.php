@@ -152,3 +152,25 @@ $routes->group('images', ['namespace' => 'App\Controllers'], static function($ro
     $routes->post('update', 'ImagesController::saveData', ['filter' => 'auth:N,3,3']);
     $routes->delete('(:num)/delete', 'ImagesController::deleteData/$1', ['filter' => 'auth:N,3,4']);
 });
+
+$routes->group('ref_formasi', ['namespace' => 'App\Controllers'], static function($routes) {
+    $routes->get('index', 'RefFormasiController::index', ['filter' => 'auth:Y,4,1']);
+    $routes->post('ajax_list', 'RefFormasiController::ajaxList', ['filter' => 'auth:N,4,1']);
+    $routes->get('tambah', 'RefFormasiController::tambahData', ['filter' => 'auth:N,4,2']);
+    $routes->post('save', 'RefFormasiController::saveData', ['filter' => 'auth:N,4,2']);
+    $routes->get('(:num)/detail', 'RefFormasiController::detailData/$1', ['filter' => 'auth:Y,4,1']);
+    $routes->get('(:num)/edit', 'RefFormasiController::editData/$1', ['filter' => 'auth:N,4,3']);
+    $routes->post('update', 'RefFormasiController::saveData', ['filter' => 'auth:N,4,3']);
+    $routes->delete('(:num)/delete', 'RefFormasiController::deleteData/$1', ['filter' => 'auth:N,4,4']);
+});
+
+$routes->group('ref_formasi_soal', ['namespace' => 'App\Controllers'], static function($routes) {
+    $routes->get('index', 'RefFormasiSoalController::index', ['filter' => 'auth:Y,4,1']);
+    $routes->post('ajax_list', 'RefFormasiSoalController::ajaxList', ['filter' => 'auth:N,4,1']);
+    $routes->get('tambah', 'RefFormasiSoalController::tambahData', ['filter' => 'auth:N,4,2']);
+    $routes->post('save', 'RefFormasiSoalController::saveData', ['filter' => 'auth:N,4,2']);
+    $routes->get('(:num)/detail', 'RefFormasiSoalController::detailData/$1', ['filter' => 'auth:Y,4,1']);
+    $routes->get('(:num)/edit', 'RefFormasiSoalController::editData/$1', ['filter' => 'auth:N,4,3']);
+    $routes->post('update', 'RefFormasiSoalController::saveData', ['filter' => 'auth:N,4,3']);
+    $routes->delete('(:num)/delete', 'RefFormasiSoalController::deleteData/$1', ['filter' => 'auth:N,4,4']);
+});

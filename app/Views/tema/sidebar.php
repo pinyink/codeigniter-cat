@@ -19,6 +19,12 @@
                 <a href="javascript:;"><i class="sidebar-item-icon fa fa-database"></i>
                     <span class="nav-label">Referensi</span><i class="fa fa-angle-left arrow"></i></a>
                 <ul class="nav-2-level collapse">
+                    <?php if (enforce(3, 1)) : ?>
+                    <li>
+                        <a href="<?= base_url('images/index'); ?>">Images</a>
+                    </li>
+                    <?php endif ?>
+
                     <?php if (enforce(1, 1)) : ?>
                     <li>
                         <a href="<?= base_url('ref_jenis_soal/index'); ?>">Jenis Soal</a>
@@ -28,6 +34,12 @@
                     <?php if (enforce(2, 1)) : ?>
                     <li>
                         <a href="<?= base_url('ref_soal/index'); ?>">Soal</a>
+                    </li>
+                    <?php endif ?>
+
+                    <?php if (enforce(4, 1)) : ?>
+                    <li>
+                        <a href="<?= base_url('ref_formasi/index'); ?>">Formasi</a>
                     </li>
                     <?php endif ?>
                 </ul>
