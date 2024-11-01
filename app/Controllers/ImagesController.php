@@ -29,7 +29,7 @@ private $uploadLib;
 
 	public function ajaxList()
     {
-        $this->imagesModel->select('id, ')->where('deleted_at', null);
+        $this->imagesModel->select('id, images')->where('deleted_at', null);
 
         return DataTable::of($this->imagesModel)
             ->add('action', function($row){

@@ -37,6 +37,50 @@
 		<?php endif ?>
                 
 	</div>
+	<hr>
+	<?php $x= 1; while($x<=5): ?>
+		<?php $value = isset($ref_soal['id_'.$x]) ? $ref_soal['id_'.$x] : old('id_'.$x); ?>
+		<input type="hidden" name="id_<?=$x;?>" value="<?=$value;?>">
+		<div class="row">
+			<div class="col-md-9">
+				<div class="form-group">
+						
+					<?= form_label('Jawaban '.$x); ?>
+								
+					<?php $invalid = session('_ci_validation_errors.jawaban_'.$x) ? 'is-invalid' : ''; ?>
+								
+					<?php $value = isset($ref_soal['jawaban_'.$x]) ? $ref_soal['jawaban_'.$x] : old('jawaban_'.$x); ?>
+								
+					<?= form_textarea('jawaban_'.$x, trim($value), ['class' => 'form-control summernote '.$invalid, 'rows' => '2', 'placeholder' => 'Jawaban']); ?>
+								
+					<?php if(session('_ci_validation_errors.jawaban_'.$x)):?>
+									
+						<div class="text-danger"><?=session('_ci_validation_errors.jawaban_'.$x)?></div>
+								
+					<?php endif ?>
+							
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<?= form_label('nilai '.$x); ?>
+								
+					<?php $invalid = session('_ci_validation_errors.nilai_'.$x) ? 'is-invalid' : ''; ?>
+								
+					<?php $value = isset($ref_soal['nilai_'.$x]) ? $ref_soal['nilai_'.$x] : old('nilai_'.$x); ?>
+								
+					<?= form_input('nilai_'.$x, trim($value), ['class' => 'form-control '.$invalid, 'placeholder' => 'nilai']); ?>
+								
+					<?php if(session('_ci_validation_errors.nilai_'.$x)):?>
+									
+						<div class="text-danger"><?=session('_ci_validation_errors.nilai_'.$x)?></div>
+								
+					<?php endif ?>
+				</div>
+			</div>
+		</div>
+		<?php $x++; ?>
+	<?php endwhile ?>
 <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> <?=$button;?></button>
 <?= form_close(); ?>
 
@@ -51,6 +95,8 @@
         $('[name="soal"]').summernote({
 			height: 240,
 		});
+
+		$('.summernote').summernote();
     });
 </script>
 <?php $this->endSection(); ?>

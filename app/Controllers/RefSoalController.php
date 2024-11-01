@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Libraries\Tema;
+use App\Models\RefJawabanModel;
 use App\Models\RefJenisSoalModel;
 use Hermawan\DataTables\DataTable;
 
@@ -94,6 +95,15 @@ class RefSoalController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         $jenisSoalModel = new RefJenisSoalModel();
+        $refJawabanModle = new RefJawabanModel();
+        $qJawaban = $refJawabanModle->where('ref_soal', $id)->find();
+        $x = 1;
+        foreach ($qJawaban as $key => $value) {
+            $query['jawaban_'.$x] = $value['jawaban'];
+            $query['nilai_'.$x] = $value['nilai'];
+            $query['id_'.$x] = $value['id'];
+            $x++;
+        }
         $data = [
             'button' => 'Simpan',
             'id' => $id,
@@ -121,10 +131,31 @@ class RefSoalController extends BaseController
         if ($validation->withRequest($request)->run()) {
             $validData = $validation->getValidated();
             
+            $refJawabanModle = new RefJawabanModel();
             if($method == 'save') {
                 $id = $this->refSoalModel->insert($validData);
+                $x = 1;
+                while ($x<=5) {
+                    $array = [];
+                    $array['jawaban'] = $this->request->getPost('jawaban_'.$x);
+                    $array['nilai'] = $this->request->getPost('nilai_'.$x);
+                    $array['id'] = $this->request->getPost('id_'.$x);
+                    $array['ref_soal'] = $id;
+                    $refJawabanModle->insert($array);
+                    $x++;
+                }
                 return redirect()->to('ref_soal/'.$id.'/detail')->with('message', '<div class="alert alert-success">Simpan Data Berhasil</div>');
             } else {
+                $x = 1;
+                while ($x<=5) {
+                    $array = [];
+                    $array['jawaban'] = $this->request->getPost('jawaban_'.$x);
+                    $array['nilai'] = $this->request->getPost('nilai_'.$x);
+                    $array['id'] = $this->request->getPost('id_'.$x);
+                    $array['ref_soal'] = $id;
+                    $refJawabanModle->update($array['id'], $array);
+                    $x++;
+                }
                 $this->refSoalModel->update($id, $validData);
                 return redirect()->to('ref_soal/'.$id.'/edit')->with('message', '<div class="alert alert-success">Update Data Berhasil</div>');
             }
