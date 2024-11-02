@@ -167,10 +167,7 @@ $routes->group('ref_formasi', ['namespace' => 'App\Controllers'], static functio
 $routes->group('ref_formasi_soal', ['namespace' => 'App\Controllers'], static function($routes) {
     $routes->get('index', 'RefFormasiSoalController::index', ['filter' => 'auth:Y,4,1']);
     $routes->post('ajax_list', 'RefFormasiSoalController::ajaxList', ['filter' => 'auth:N,4,1']);
-    $routes->get('tambah', 'RefFormasiSoalController::tambahData', ['filter' => 'auth:N,4,2']);
     $routes->post('save', 'RefFormasiSoalController::saveData', ['filter' => 'auth:N,4,2']);
     $routes->get('(:num)/detail', 'RefFormasiSoalController::detailData/$1', ['filter' => 'auth:Y,4,1']);
-    $routes->get('(:num)/edit', 'RefFormasiSoalController::editData/$1', ['filter' => 'auth:N,4,3']);
-    $routes->post('update', 'RefFormasiSoalController::saveData', ['filter' => 'auth:N,4,3']);
     $routes->delete('(:num)/delete', 'RefFormasiSoalController::deleteData/$1', ['filter' => 'auth:N,4,4']);
 });

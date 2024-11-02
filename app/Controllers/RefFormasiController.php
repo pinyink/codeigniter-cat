@@ -7,6 +7,7 @@ use App\Libraries\Tema;
 use Hermawan\DataTables\DataTable;
 
 use App\Models\RefFormasiModel;
+use App\Models\RefJenisSoalModel;
 
 class RefFormasiController extends BaseController
 {
@@ -15,7 +16,7 @@ class RefFormasiController extends BaseController
 
     function __construct()
     {
-        helper(['form']);
+        helper(['form', 'formCustom']);
         $this->tema = new Tema();
         $this->refFormasiModel = new RefFormasiModel();
         
@@ -62,6 +63,14 @@ class RefFormasiController extends BaseController
 					'alpha_numeric_space' => '{field} Hanya berupa huruf, angka dan spasi'
                 ]
             ],
+            'waktu' => [
+                'label' => 'Formasi',
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '{field} Harus di isi',
+					'numeric' => '{field} harus berupa angka',
+                ]
+            ],
         ];
 
         return $rules;
@@ -83,12 +92,16 @@ class RefFormasiController extends BaseController
         if(empty($query)) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
+
+        $refJenisSoal = new RefJenisSoalModel();
+
         $data = [
             'button' => 'Simpan',
             'id' => $id,
             'method' => 'update',
             'url' => 'ref_formasi/update',
-            'ref_formasi' => $query
+            'ref_formasi' => $query,
+            'ref_jenis_soal' => $refJenisSoal->findAll()
         ];
         $this->tema->setJudul('Edit Ref Formasi');
         $this->tema->loadTema('ref_formasi/edit', $data);

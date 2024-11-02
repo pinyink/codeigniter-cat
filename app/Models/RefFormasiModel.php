@@ -14,7 +14,7 @@ class RefFormasiModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama'];
+    protected $allowedFields    = ['nama', 'waktu'];
 
     // Dates
     protected $useTimestamps = true;

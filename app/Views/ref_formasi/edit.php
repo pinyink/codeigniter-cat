@@ -66,6 +66,7 @@
                     <div class="ibox-title">Ketentuan</div>
                     <div class="ibox-tools">
                         <a onclick="reload_table()" class="refresh" data-toggle="tooltip" data-placement="top" title="reload data"><i class="fa fa-refresh"></i></a>
+                        <a href="javascript:;" onclick="tambah_soal()"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="ibox-body">
@@ -92,6 +93,37 @@
     <!-- /Row -->
 </div>
 <!-- /Container -->
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <?=form_open('', ['id' => 'form'], ['id' => '', 'method' => '', 'formasi' => $ref_formasi['id']]);?>
+            <?=csrf_field();?>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal Soal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+					<div class="form-group">
+                        <?=form_label('Jenis Soal');?>
+                        <?=form_dropdown('jenis_soal', dropdown($ref_jenis_soal, 'id', 'nama'), '', ['class' => 'form-control']);?>
+                    </div>
+					<div class="form-group">
+                        <?=form_label('Jumlah')?>
+                        <?=form_input('jumlah', '', ['class' => 'form-control'])?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        <?=form_close();?>
+    </div>
+</div>
+
 <?=$this->endSection();?>
 <?=$this->section('js');?>
 <script src="<?=base_url(); ?>/assets/alertifyjs/alertify.min.js" type="text/javascript"> </script>
@@ -135,6 +167,96 @@
     
     function reload_table() {
         table.ajax.reload(null, false);
+    }
+
+    function tambah_soal()
+    {
+        $('[name="method"]').val('save');
+        $('#modal').modal('show');
+        $('[name="id"]').val(null);
+        $('[name="jenis_soal"]').val(null);
+        $('[name="jumlah"]').val(null);
+    }
+
+    $('#form').submit(function (e) { 
+        e.preventDefault();
+        $.ajax({
+            type: "post",
+            url: "<?=base_url('ref_formasi_soal/save')?>",
+            data: $('#form').serialize(),
+            dataType: "json",
+            success: function (response) {
+                if(response.errorCode == 1) {
+                    Swal.fire(
+                        'Save!',
+                        'Data Berhasil Di Simpan.',
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Save Failed!',
+                        'Data Gagal Di Simpan',
+                        'warning'
+                    )
+                }
+                $('#modal').modal('hide');
+                reload_table();
+            }
+        });
+    });
+
+    function edit_soal(id)
+    {
+        $.ajax({
+            type: "get",
+            url: "<?=base_url('ref_formasi_soal')?>/"+id+"/detail",
+            dataType: "json",
+            success: function (response) {
+                $('[name="method"]').val('update');
+                $('#modal').modal('show');
+                $('[name="id"]').val(id);
+                $('[name="jenis_soal"]').val(response.ref_jenis_soal);
+                $('[name="jumlah"]').val(response.jumlah);
+            }
+        });
+    }
+
+    function delete_soal(id) {
+        Swal.fire({
+        title: 'Apa Anda Yakin?',
+        text: "Anda Tidak Dapat Mengembalikan Data Yang Telah Di Hapus",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya Hapus !'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: "<?=base_url('ref_formasi_soal')?>/"+id+'/delete',
+                data: {'<?=csrf_token()?>' : '<?=csrf_hash()?>'},
+                dataType: "json",
+                success: function (response) {
+                    if(response.errorCode == 1) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Data Berhasil Di Hapus.',
+                            'success'
+                        )
+                    } else {
+                        Swal.fire(
+                            'Deleted Failed!',
+                            'Data Gagal Di Hapus',
+                            'warning'
+                        )
+                    }
+                    reload_table();
+                }
+            });
+        }
+        })
+
     }
 </script>
 <?=$this->endSection();?>
